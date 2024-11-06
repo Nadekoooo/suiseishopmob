@@ -1,7 +1,7 @@
 <h1>Flutter PBP</h1>
 <h2>Tugas 7</h2>
 
-1. Apa yang Dimaksud dengan Stateless Widget dan Stateful Widget, dan Apa Perbedaan dari Keduanya?
+<h3>1. Apa yang Dimaksud dengan Stateless Widget dan Stateful Widget, dan Apa Perbedaan dari Keduanya?</h3>
 
 Stateless Widget adalah widget yang tidak memiliki state yang dapat berubah selama siklus hidupnya. Jadi setelah dirender dia tidak akan berubah kecuali ada perubahan pada parent widget yang mempengaruhinya.
 
@@ -12,7 +12,7 @@ Perbedaan utama:
 Stateless Widget: Tidak berubah setelah dirender. Contoh: Text, Icon.
 Stateful Widget: Dapat berubah selama siklus hidupnya. Contoh: Checkbox, Slider, TextField.
 
-2. Sebutkan widget apa saja yang kamu gunakan pada proyek ini dan jelaskan fungsinya.
+<h3>2. Sebutkan widget apa saja yang kamu gunakan pada proyek ini dan jelaskan fungsinya.</h3>
 Widget yang digunakan adalah:
 
 - Scaffold: Menyediakan struktur dasar aplikasi Flutter dengan AppBar, Drawer, dan Body. Ini berfungsi sebagai kerangka utama halaman.
@@ -27,7 +27,7 @@ Widget yang digunakan adalah:
 - InkWell: Menambahkan efek klik (ripple effect) pada widget dan mendeteksi aksi pengguna.
 - SnackBar: Menampilkan pesan sementara di bagian bawah layar ketika terjadi suatu aksi.
 
-3. Apa fungsi dari `setState()`? Jelaskan variabel apa saja yang dapat terdampak dengan fungsi tersebut.
+<h3>3. Apa fungsi dari `setState()`? Jelaskan variabel apa saja yang dapat terdampak dengan fungsi tersebut.</h3>
 
 `setState()` merupakan metode yang digunakan untuk memberi tahu Flutter bahwa ada perubahan pada state dari suatu `StatefulWidget`. Ketika `setState()` dipanggil, Flutter akan menjalankan ulang metode `build()` pada widget tersebut sehingga tampilan dapat diperbarui dengan nilai yang sudah disesuaikan.
 
@@ -35,13 +35,13 @@ Contoh variabel yang terdampak `setState()`: Jika kita memiliki variabel counter
 
 Semua variabel yang disimpan dalam State dari `StatefulWidget` dan diakses di dalam `setState()` akan terdampak dari penggunaan `setState` ini, dan memungkinkan UI untuk selalu menyikronkan diri dengan data aplikasi yang selalu berubah (dinamis), jadi tampilan akan menjadi responsif dan menyesuaikan input pengguna.
 
-4. Jelaskan perbedaan antara `const` dengan `final`
+<h3>4. Jelaskan perbedaan antara `const` dengan `final`</h3>
 
 - const: Digunakan untuk nilai konstan yang ditetapkan pada waktu kompilasi. Objek yang dideklarasikan sebagai `const` tidak akan pernah berubah selama runtime.
 
 - final: Digunakan untuk nilai yang hanya dapat diinisialisasi sekali, namun nilainya bisa ditentukan saat runtime. `final` tidak harus diketahui saat waktu kompilasi seperti const, tetapi setelah nilai diberikan, variabel tersebut tidak dapat diubah lagi.
 
-5. Jelaskan bagaimana cara kamu mengimplementasikan checklist-checklist di atas.
+<h3>5. Jelaskan bagaimana cara kamu mengimplementasikan checklist-checklist di atas.</h3>
 
 - Step pertama ialah tahap instalasi. Instalasi ini mencakup instalasi `Flutter` dan `Android Studio`. Tentunya instalasi ini krusial sebagai langkah pertama dalam pengembangan aplikasi pada flutter ini.
 
@@ -63,7 +63,7 @@ Berikut salah satu langkah untuk melihat pengemabangan project awal ini
 
 Langkah - langkah utamanya ialah sebagai berikut:
 
-1. Mengatur Tema Warna Aplikasi
+<h4>1. Mengatur Tema Warna Aplikasi</h4>
 
 Buka file `main.dart`.
 Sesuaikan skema warna aplikasi dengan tema yang diinginkan. Berikut contoh penggunaan warna ungu tua sebagai tema utama:
@@ -76,7 +76,7 @@ theme: ThemeData(
 ),
 ```
 
-2. Mengubah Halaman Utama Menjadi StatelessWidget
+<h4>2. Mengubah Halaman Utama Menjadi StatelessWidget</h4>
 Ubah `MyHomePage` menjadi `StatelessWidget` agar tidak tergantung pada perubahan state.
 Hapus elemen yang tidak diperlukan untuk `stateless widget`, seperti `createState()`.
 Ubah konstruktor menjadi sederhana tanpa atribut tambahan,
@@ -86,7 +86,7 @@ class MyHomePage extends StatelessWidget {
     MyHomePage({super.key});
 ```
 
-3. Membuat `InfoCard` untuk Menampilkan Informasi Pengguna (opsional, pada tugas ini saya tambahkan)
+<h4>3. Membuat `InfoCard` untuk Menampilkan Informasi Pengguna (opsional, pada tugas ini saya tambahkan)</h4>
 
 Tambahkan tiga variabel String pada MyHomePage untuk menyimpan data pengguna seperti NPM, nama, dan kelas:
 
@@ -125,7 +125,7 @@ class InfoCard extends StatelessWidget {
 }
 ```
 
-4. Membuat Button Card untuk Fitur Utama dengan Ikon
+<h4>4. Membuat Button Card untuk Fitur Utama dengan Ikon</h4>
 
 Menambahkan model `ItemHomepage` untuk mendefinisikan setiap fitur dalam bentuk button card:
 
