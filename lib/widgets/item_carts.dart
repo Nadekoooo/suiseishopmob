@@ -38,12 +38,22 @@ class ItemCard extends StatelessWidget {
       child: InkWell(
         // Aksi ketika kartu ditekan.
         onTap: () {
-          // Menampilkan pesan SnackBar saat kartu ditekan.
-          ScaffoldMessenger.of(context)
-            ..hideCurrentSnackBar()
-            ..showSnackBar(SnackBar(
-                content: Text("Kamu telah menekan tombol ${item.name}!")));
-        },
+    // Menampilkan pesan SnackBar saat kartu ditekan.
+    ScaffoldMessenger.of(context)
+      ..hideCurrentSnackBar()
+      ..showSnackBar(SnackBar(
+          content: Text("Kamu telah menekan tombol ${item.name}!")));
+
+    // Navigasi ke halaman baru jika item.name adalah "Tambah Produk".
+    if (item.name == "Tambah Produk") {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const ItemEntryFormPage(),
+        ),
+      );
+    }
+  },
         // Container untuk menyimpan Icon dan Text
         child: Container(
           padding: const EdgeInsets.all(8),
