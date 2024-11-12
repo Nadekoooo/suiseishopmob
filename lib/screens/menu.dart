@@ -1,7 +1,7 @@
 // Menu Dart
 import 'package:flutter/material.dart';
 import 'package:suiseishop/widgets/left_drawer.dart';
-import 'package:suiseishop/widgets/mood_carts.dart';
+import 'package:suiseishop/widgets/item_carts.dart';
 
 class MyHomePage extends StatelessWidget {
   final String npm = '2306241676'; // NPM
@@ -9,7 +9,7 @@ class MyHomePage extends StatelessWidget {
   final String className = 'PBP F'; // Kelas
 
   final List<ItemHomepage> items = [
-    ItemHomepage("Lihat Daftar Produk", Icons.mood),
+    ItemHomepage("Lihat Daftar Produk", Icons.shop),
     ItemHomepage("Tambah Produk", Icons.add),
     ItemHomepage("Logout", Icons.logout),
   ];
@@ -92,6 +92,7 @@ class MyHomePage extends StatelessWidget {
           ],
         ),
       ),
+      drawer: const LeftDrawer(),
     );
   }
 }

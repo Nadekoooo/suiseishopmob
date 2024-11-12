@@ -1,6 +1,6 @@
 // Main Dart
 import 'package:flutter/material.dart';
-import 'package:suiseishop/menu.dart';
+import 'package:suiseishop/screens/menu.dart';
 
 void main() {
   runApp(const MyApp());
