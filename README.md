@@ -353,7 +353,7 @@ Seperti pada tutorial, Flutter memiliki sebuah sistim navigasi yang mampu memind
 if (item.name == "Tambah Mood") {
         Navigator.push(context,
           MaterialPageRoute(builder: (context) => const MoodEntryFormPage()));
-  }
+}
 ```
 
 <h5>Pop</h5>
