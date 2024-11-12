@@ -263,14 +263,14 @@ class MyHomePage extends StatelessWidget {
 
 <h2>Tugas 8</h2>
 
-<h3>Apa kegunaan const di Flutter? Jelaskan apa keuntungan ketika menggunakan `const` pada kode Flutter. Kapan sebaiknya kita menggunakan `const`, dan kapan sebaiknya tidak digunakan?</h3>
+<h3>1. Apa kegunaan const di Flutter? Jelaskan apa keuntungan ketika menggunakan `const` pada kode Flutter. Kapan sebaiknya kita menggunakan `const`, dan kapan sebaiknya tidak digunakan?</h3>
 `const` dalam Flutter dipakai untuk meng-state variable konstan pada objek yang tidak berubah. Ketika sebuah widget atau objek dideklarasikan dengan `const`, Flutter dapat mengoptimalkan performa aplikasi dengan menyimpan dan menggunakan kembali objek tersebut, karena tidak akan pernah berubah (sesuai dengan namanya constant).
 
 `const` mampu memberikan efektivitas lebih karena deklarasinya hanya sekali dalam memori flutter (pada aplikasi), penggunaan `const` juga bisa membuat keterbacaan yang lebih baik karena memberitahu bahwa sebuah variabel hanya akan di state sekali dan bersifat tetap.
 
 `const` sebaiknya digunakan untuk variabel yang tidak akan berubah nilainya di seluruh pembuatan/penggunaan aplikasi, biasanya dapat digunakan pada deklarasi sebuah teks ataupun static element lainnya. Sementara itu `const` juga sebaiknya tidak digunakan pada variabel yang akan selalu berubah nilainya selama jalannya aplikasi, seperti variabel yang menyesuaikan input user ataupun sebuah state.
 
-<h3>Jelaskan dan bandingkan penggunaan Column dan Row pada Flutter. Berikan contoh implementasi dari masing-masing layout widget ini!</h3>
+<h3>2. Jelaskan dan bandingkan penggunaan Column dan Row pada Flutter. Berikan contoh implementasi dari masing-masing layout widget ini!</h3>
 
 `Column` dan `Row` adalah widget layout dasar pada Flutter yang digunakan untuk menyusun widget secara vertikal (Column) atau horizontal (Row).
 
@@ -314,7 +314,7 @@ Contoh pengaplikasian `Row`
   )
 ```
 
-<h3>Sebutkan apa saja elemen input yang kamu gunakan pada halaman form yang kamu buat pada tugas kali ini. Apakah terdapat elemen input Flutter lain yang tidak kamu gunakan pada tugas ini? Jelaskan!</h3>
+<h3>3. Sebutkan apa saja elemen input yang kamu gunakan pada halaman form yang kamu buat pada tugas kali ini. Apakah terdapat elemen input Flutter lain yang tidak kamu gunakan pada tugas ini? Jelaskan!</h3>
 
 Pada halaman form yang saya buat, elemen input yang digunakan adalah:
 
@@ -327,7 +327,7 @@ Di sini input type yang digunakan hanyalah `TextFormField`, ad atipe input lain 
 - Switch : Untuk menge-set status
 - Slider : Untuk slider angka
 
-<h3>Bagaimana cara kamu mengatur tema (theme) dalam aplikasi Flutter agar aplikasi yang dibuat konsisten? Apakah kamu mengimplementasikan tema pada aplikasi yang kamu buat</h3>
+<h3>4. Bagaimana cara kamu mengatur tema (theme) dalam aplikasi Flutter agar aplikasi yang dibuat konsisten? Apakah kamu mengimplementasikan tema pada aplikasi yang kamu buat</h3>
 
 Flutter memilikiw widget bawaan `ThemeData` untuk mengatur konsitensi warna, font dan style aplikasi keseluruhan. Menggunakan `ThemeData` ini, palet bisa ditentukan dan dapat menjadi konsistensi style pada aplikasi.
 
@@ -344,34 +344,32 @@ Implementasi tema ini terdapat pada `main.dart` yang memberikan konsistensi deng
 
 Tema diatur pada kode ini dengan memberikan value pada `colorScheme` dengan memberikan primary color dan beberapa penyesuaian lainnya sesuai dengan kebutuhan aplikasi ini (pada tugas ini SuiseiShop).
 
-<h3>Bagaimana cara kamu menangani navigasi dalam aplikasi dengan banyak halaman pada Flutter?</h3>
+<h3>5. Bagaimana cara kamu menangani navigasi dalam aplikasi dengan banyak halaman pada Flutter?</h3>
 
 Seperti pada tutorial, Flutter memiliki sebuah sistim navigasi yang mampu memindahkan halaman. Widget Navigator menampilkan halaman-halaman yang ada kepada layar seakan sebagai sebuah tumpukan (stack). Untuk menavigasi sebuah halaman baru, kita dapat mengakses Navigator melalui `BuildContext `dan memanggil fungsi yang ada, seperti misalnya `push(), pop(), serta pushReplacement()`. Navigator tersebut dapat diaplikasikan seperti berikut:
 
 <h5>Push</h5>
-```
-    if (item.name == "Tambah Mood") {
+    ```if (item.name == "Tambah Mood") {
         Navigator.push(context,
             MaterialPageRoute(builder: (context) => const MoodEntryFormPage()));
-    }
-```
+    }```
 
 <h5>Pop</h5>
-```
-onPressed: () {
+
+```onPressed: () {
         Navigator.pop(context);
-    },
-```
+    },```
+
 
 <h5>Push Replacement</h5>
-```
-  onTap: () {
+
+```onTap: () {
         Navigator.pushReplacement(
         context,
         MaterialPageRoute(
             builder: (context) => MyHomePage(),
         ));
-    },
-```
+    },```
+
 
 
