@@ -27,7 +27,7 @@ Widget yang digunakan adalah:
 - InkWell: Menambahkan efek klik (ripple effect) pada widget dan mendeteksi aksi pengguna.
 - SnackBar: Menampilkan pesan sementara di bagian bawah layar ketika terjadi suatu aksi.
 
-<h3>3. Apa fungsi dari `setState()`? Jelaskan variabel apa saja yang dapat terdampak dengan fungsi tersebut.</h3>
+<h3>3. Apa fungsi dari setState() ? Jelaskan variabel apa saja yang dapat terdampak dengan fungsi tersebut.</h3>
 
 `setState()` merupakan metode yang digunakan untuk memberi tahu Flutter bahwa ada perubahan pada state dari suatu `StatefulWidget`. Ketika `setState()` dipanggil, Flutter akan menjalankan ulang metode `build()` pada widget tersebut sehingga tampilan dapat diperbarui dengan nilai yang sudah disesuaikan.
 
