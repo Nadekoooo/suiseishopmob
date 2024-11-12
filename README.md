@@ -263,8 +263,8 @@ class MyHomePage extends StatelessWidget {
 
 <h2>Tugas 8</h2>
 
-<h3>1. Apa kegunaan const di Flutter? Jelaskan apa keuntungan ketika menggunakan `const` pada kode Flutter. Kapan sebaiknya kita menggunakan `const`, dan kapan sebaiknya tidak digunakan?</h3>
-`const` dalam Flutter dipakai untuk meng-state variable konstan pada objek yang tidak berubah. Ketika sebuah widget atau objek dideklarasikan dengan `const`, Flutter dapat mengoptimalkan performa aplikasi dengan menyimpan dan menggunakan kembali objek tersebut, karena tidak akan pernah berubah (sesuai dengan namanya constant).
+<h3>1. Apa kegunaan const di Flutter? Jelaskan apa keuntungan ketika menggunakan const pada kode Flutter. Kapan sebaiknya kita menggunakan const, dan kapan sebaiknya tidak digunakan?</h3>
+const dalam Flutter dipakai untuk meng-state variable konstan pada objek yang tidak berubah. Ketika sebuah widget atau objek dideklarasikan dengan `const`, Flutter dapat mengoptimalkan performa aplikasi dengan menyimpan dan menggunakan kembali objek tersebut, karena tidak akan pernah berubah (sesuai dengan namanya constant).
 
 `const` mampu memberikan efektivitas lebih karena deklarasinya hanya sekali dalam memori flutter (pada aplikasi), penggunaan `const` juga bisa membuat keterbacaan yang lebih baik karena memberitahu bahwa sebuah variabel hanya akan di state sekali dan bersifat tetap.
 
@@ -349,6 +349,7 @@ Tema diatur pada kode ini dengan memberikan value pada `colorScheme` dengan memb
 Seperti pada tutorial, Flutter memiliki sebuah sistim navigasi yang mampu memindahkan halaman. Widget Navigator menampilkan halaman-halaman yang ada kepada layar seakan sebagai sebuah tumpukan (stack). Untuk menavigasi sebuah halaman baru, kita dapat mengakses Navigator melalui `BuildContext `dan memanggil fungsi yang ada, seperti misalnya `push(), pop(), serta pushReplacement()`. Navigator tersebut dapat diaplikasikan seperti berikut:
 
 <h5>Push</h5>
+
 ```
 if (item.name == "Tambah Mood") {
         Navigator.push(context,
