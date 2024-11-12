@@ -349,27 +349,33 @@ Tema diatur pada kode ini dengan memberikan value pada `colorScheme` dengan memb
 Seperti pada tutorial, Flutter memiliki sebuah sistim navigasi yang mampu memindahkan halaman. Widget Navigator menampilkan halaman-halaman yang ada kepada layar seakan sebagai sebuah tumpukan (stack). Untuk menavigasi sebuah halaman baru, kita dapat mengakses Navigator melalui `BuildContext `dan memanggil fungsi yang ada, seperti misalnya `push(), pop(), serta pushReplacement()`. Navigator tersebut dapat diaplikasikan seperti berikut:
 
 <h5>Push</h5>
-    ```if (item.name == "Tambah Mood") {
+```
+if (item.name == "Tambah Mood") {
         Navigator.push(context,
-            MaterialPageRoute(builder: (context) => const MoodEntryFormPage()));
-    }```
+          MaterialPageRoute(builder: (context) => const MoodEntryFormPage()));
+  }
+```
 
 <h5>Pop</h5>
 
-```onPressed: () {
+```
+onPressed: () {
         Navigator.pop(context);
-    },```
+},
+```
 
 
 <h5>Push Replacement</h5>
 
-```onTap: () {
+```
+onTap: () {
         Navigator.pushReplacement(
         context,
         MaterialPageRoute(
             builder: (context) => MyHomePage(),
         ));
-    },```
+  },
+```
 
 
 
