@@ -27,7 +27,7 @@ class LeftDrawer extends StatelessWidget {
                 ),
                 Padding(padding: EdgeInsets.all(8)),
                 Text(
-                  "Ayo jaga kesehatan mentalmu setiap hari disini!",
+                  "Mari kumpul hoshiyomi",
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 15,
