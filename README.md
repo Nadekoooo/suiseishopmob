@@ -390,3 +390,174 @@ Method `pushReplacement()` menghapus route yang sedang ditampilkan kepada penggu
 Di samping ketiga method ini, terdapat juga beberapa method lain yang dapat memudahkan routing dalam pengembangan aplikasi, seperti `popUntil()`, `canPop()`, dan `maybePop()`.
 
 
+<h2>Tugas 9</h2>
+<h4>Mengapa Kita Perlu Membuat Model untuk Mengambil atau Mengirimkan Data JSON? Apakah Akan Terjadi Error Jika Tidak Membuat Model Terlebih Dahulu?</h4>
+
+Model pada Django berfungsi untuk merepresentasikan struktur data yang akan digunakan dalam aplikasi, seperti tabel dalam basis data. Dengan membuat model:
+
+- Struktur data yang lebih terdefinisi, hal ini dapat memastikan bahwa data yang diterima atau dikirim sesuai dengan struktur yang diharapkan.
+- Selain poin pertama data juga akan divalidasi dan akan dipastikan jika data memiliki atribut dan tipe yang sesuai dengan datanya. Misal :  `price` sebagai `int`, `name` sebagai `String`.
+- Dengan mendefinisikan struktur ini, efisiensi juga pasti meningkat ketika mengakses atribut (dibandingkan dengan pemanggilan JSOn key secara manual)
+- Model seperti `ProductEntry` pada tugas ini mempermudah konversi JSON ke objek Dart dan sebaliknya.
+
+Apabila tidak ada model mungkin:
+- Data yang diterima ataupun dikirimkan harus dikelola secara manual yang sangat prone terhadap kesalahan.
+- Tidak adanya validasi juga membuat data tipe rawan dengan kesalahan. Kesalahan tipe data, seperti `price `dikirim sebagai `String` padahal aplikasi mengharapkan `int`.
+- Skalabilitasnya juga berkurang. Perubahan struktur JSON membutuhkan modifikasi besar pada logika aplikasi.
+
+Secara garis besar penerapannya seperti ini
+
+```
+class ProductEntry {
+  String pk; // Primary key
+  Fields fields;
+
+  ProductEntry({
+    required this.pk,
+    required this.fields,
+  });
+
+  factory ProductEntry.fromJson(Map<String, dynamic> json) => ProductEntry(
+        pk: json["pk"],
+        fields: Fields.fromJson(json["fields"]),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "pk": pk,
+        "fields": fields.toJson(),
+      };
+}
+```
+
+dengan `fields` berisikan tipe data definisi datanya.
+
+<h4>2. Fungsi Library http yang Diimplementasikan pada Tugas
+Library http di Flutter digunakan untuk berbagai hal yaitu:
+
+- Mengirim Request HTTP: Seperti GET, POST, PUT, DELETE, untuk berinteraksi dengan server.
+- Menerima Response: Data yang dikirim oleh server, biasanya dalam format JSON.
+- Mendekodekan Data JSON: Fungsi seperti `json.decode()` memungkinkan kita mengubah data JSON menjadi struktur data Dart.
+
+Dengan adanya library ini, koneksi antara flutter dan django dipermudah sehingga mampu menjalankan aplikasi dengan baik
+
+Berikut contoh penerapan pada kode saya:
+```
+  final response = await request.get('http://localhost:8000/json/');
+
+  var data = response;
+```
+
+<h4>3. Fungsi CookieRequest dan Mengapa Perlu Dibagikan ke Semua Komponen Flutter</h4>
+
+`CookieRequest` adalah bagian dari library `pbp_django_auth `yang digunakan untuk menangani autentikasi berbasis cookie antara Flutter dan Django.
+
+Fungsinya cukup penting dan ada di beberapa bagian kode ini:
+
+- Mengelola Cookie: Menyimpan cookie yang dikirim oleh server saat login, sehingga session pengguna dapat dipertahankan.
+- Request Terautentikasi: Menyisipkan cookie pada setiap request untuk mengakses data yang membutuhkan autentikasi.
+- Logout Otomatis: Memungkinkan pengguna untuk logout dengan cara menghapus cookie.
+
+Hal ini berkaitan erat dengan alsannya mengapa cookie harus tersebar dai dibagikan di aplikasi karena:
+
+- Cookie menyimpan informasi session pengguna yang diperlukan untuk setiap permintaan (request) ke server.
+- Instance `CookieRequest` perlu dibagikan ke seluruh aplikasi agar setiap halaman dapat melakukan permintaan terautentikasi (biar user validated).
+
+<h4>4. Mekanisme Pengiriman Data dari Input Hingga Ditampilkan pada Flutter</h4>
+
+Secara garis besar prosesnya seperti ini:
+
+- <h5> Input Data di Flutter: </h5>
+Pengguna mengisi form pada Flutter menggunakan widget seperti `TextField`.
+Data dari form dikirim ke server menggunakan `http` atau `CookieRequest.`
+
+- <h5> Proses di Django: </h5>
+Data diterima oleh Django pada fungsi view yang sesuai (biasanya melalui metode POST).
+Django memvalidasi data menggunakan model atau form. Jika validasi sukses, data disimpan di database.
+
+- <h5> Mengirim Data ke Flutter: </h5>
+Django merespons request GET dari Flutter dengan data dalam format JSON.
+Data JSON ini kemudian diterjemahkan kembali oleh Flutter menggunakan `jsonDecode` atau model.
+
+- <h5> Menampilkan Data di Flutter: </h5>
+Data yang diterjemahkan ditampilkan menggunakan widget seperti `ListView` atau `Text`.
+
+<h4>Mekanisme Autentikasi (Login, Register, Logout)</h4>
+Pada aplikasi ini, prosesnya adalah sebagai berikut:
+
+- <h5>Input Data Akun di Flutter:</h5>
+
+Pengguna mengisi form login/register pada Flutter.
+Data dikirim ke Django melalui CookieRequest dengan metode POST.
+
+- <h5>Register:</h5>
+
+Data register diterima Django dan diproses untuk membuat pengguna baru.
+Jika berhasil, server mengirimkan respons sukses.
+
+- <h5>Login:</h5>
+
+Data login diterima Django dan diverifikasi menggunakan authenticate().
+Jika valid, Django mengirimkan cookie session kepada Flutter.
+
+- <h5> Logout: </h5>
+
+Saat logout, Flutter mengirimkan request ke endpoint logout di Django.
+Django menghapus session dan mengembalikan respons berhasil.
+
+- <h5>Menampilkan Menu di Flutter:</h5>
+
+Setelah login berhasil, Flutter menyimpan session (cookie) dan menggunakan session ini untuk mendapatkan data pengguna dari server.
+
+
+<h4> Cara implementasi Checklist stepbystep</h4>
+
+1. Membuat Model untuk Data JSON
+- Tujuan: Agar data dari web service (JSON) dapat diolah dan ditampilkan dengan baik di aplikasi Flutter.
+- Langkah:
+Membuat model menggunakan class di Flutter.
+Menambahkan `fromJson` dan `toJson` untuk konversi data antara JSON dan objek.
+Jika respons berupa daftar data, menambahkan fungsi untuk menangani list JSON.
+
+2. Melakukan Fetch Data dari Web Service
+- Tujuan: Mengambil data eksternal (dari Django) untuk ditampilkan di aplikasi Flutter.
+- Langkah:
+Menambahkan dependensi `http` untuk pengambilan data.
+Menambahkan izin internet di file `AndroidManifest.xml.`
+Membuat fungsi `fetchProduct` menggunakan request HTTP `GET`.
+Menggunakan `FutureBuilder` untuk menampilkan data ke UI.
+
+3. Membuat Sistem Login, Register, dan Logout
+- Tujuan: Mengintegrasikan autentikasi pengguna antara Django dan Flutter.
+- Langkah:
+Membuat endpoint login, register, dan logout di Django.
+Menggunakan `pbp_django_auth` dan `Provider` untuk autentikasi di Flutter.
+Implementasi:
+- - Login: Mengirim username dan password ke endpoint Django, lalu menyimpan sesi jika berhasil.
+- - Register: Mengirim data akun baru ke Django untuk dibuatkan pengguna baru.
+- - Logout: Menghapus sesi pengguna dengan memanggil endpoint Django.
+
+4. Menampilkan Data ke UI
+- Tujuan: Menampilkan daftar produk yang diambil dari Django ke dalam aplikasi Flutter.
+- Langkah:
+  - 1. Membuat `ListView` untuk menampilkan daftar produk.
+  - 2. Menambahkan dekorasi UI menggunakan widget seperti `Card`, `Column`, dan `Text`.
+
+5. Menambahkan Detail Produk
+-  Tujuan: Memberikan informasi lebih detail tentang suatu produk dan memungkinkan pengguna untuk kembali ke daftar produk.
+- Langkah:
+- 1. Membuat halaman `ProductDetailPage` yang menampilkan informasi detail produk.
+- 2. Menambahkan navigasi ke halaman detail saat pengguna menekan salah satu produk di daftar.
+- 3. Menambahkan tombol "Back" di halaman detail untuk kembali ke daftar produk.
+
+6. Menggunakan State Management dengan Provider
+- Tujuan: Mengelola state aplikasi dengan efisien.
+- Langkah:
+- 1.Membungkus root widget aplikasi dengan Provider.
+- 2.Membuat instance CookieRequest agar sesi dapat dibagikan ke seluruh komponen aplikasi.
+- 3.Menggunakan Provider untuk memantau status login dan logout pengguna.
+Tambahan
+
+1. Terakhir setelah semua terintegrasi, saya menambahkan screens baru utuk menghandle detail product:
+
+2. Halaman Detail Produk: Dapat diakses dengan menekan salah satu produk di daftar.
+Tombol Back: Untuk kembali dari halaman detail ke daftar produk.
