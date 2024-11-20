@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:suiseishop/screens/menu.dart';
-import 'package:suiseishop/screens/itementry_form.dart';
+import 'package:suiseishop/screens/productentry_form.dart';
+import 'package:suiseishop/screens/list_ProductEntry.dart';
 
 class LeftDrawer extends StatelessWidget {
   const LeftDrawer({super.key});
@@ -17,7 +18,7 @@ class LeftDrawer extends StatelessWidget {
             child: const Column(
               children: [
                 Text(
-                  'Mental Health Tracker',
+                  'SuiseiShop',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 24,
@@ -53,14 +54,24 @@ class LeftDrawer extends StatelessWidget {
           ListTile(
             leading: const Icon(Icons.shop),
             title: const Text('Tambah Item'),
-            // Bagian redirection ke ItemEntryFormPage
+            // Bagian redirection ke ProductEntryFormPage
             onTap: () {
               Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const ItemEntryFormPage(),
+                    builder: (context) => const ProductEntryFormPage(),
                   ));
             },
+          ),
+          ListTile(
+              leading: const Icon(Icons.add_reaction_rounded),
+              title: const Text('Daftar Product'),
+              onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const ProductEntryPage()),
+                  );
+              },
           ),
         ],
       ),
