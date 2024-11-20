@@ -481,7 +481,7 @@ Data JSON ini kemudian diterjemahkan kembali oleh Flutter menggunakan `jsonDecod
 - <h5> Menampilkan Data di Flutter: </h5>
 Data yang diterjemahkan ditampilkan menggunakan widget seperti `ListView` atau `Text`.
 
-<h4>Mekanisme Autentikasi (Login, Register, Logout)</h4>
+<h4>5. Mekanisme Autentikasi (Login, Register, Logout)</h4>
 Pada aplikasi ini, prosesnya adalah sebagai berikut:
 
 - <h5>Input Data Akun di Flutter:</h5>
@@ -509,55 +509,57 @@ Django menghapus session dan mengembalikan respons berhasil.
 Setelah login berhasil, Flutter menyimpan session (cookie) dan menggunakan session ini untuk mendapatkan data pengguna dari server.
 
 
-<h4> Cara implementasi Checklist stepbystep</h4>
+<h4> 6. Cara implementasi Checklist stepbystep</h4>
 
-1. Membuat Model untuk Data JSON
+<h5> 1. Membuat Model untuk Data JSON </h5>
 - Tujuan: Agar data dari web service (JSON) dapat diolah dan ditampilkan dengan baik di aplikasi Flutter.
 - Langkah:
-Membuat model menggunakan class di Flutter.
-Menambahkan `fromJson` dan `toJson` untuk konversi data antara JSON dan objek.
-Jika respons berupa daftar data, menambahkan fungsi untuk menangani list JSON.
+1. Membuat model menggunakan class di Flutter.
+2. Menambahkan `fromJson` dan `toJson` untuk konversi data antara JSON dan objek.
+3. Jika respons berupa daftar data, menambahkan fungsi untuk menangani list JSON.
 
-2. Melakukan Fetch Data dari Web Service
+<h5> 2. Melakukan Fetch Data dari Web Service</h5> 
 - Tujuan: Mengambil data eksternal (dari Django) untuk ditampilkan di aplikasi Flutter.
 - Langkah:
-Menambahkan dependensi `http` untuk pengambilan data.
-Menambahkan izin internet di file `AndroidManifest.xml.`
-Membuat fungsi `fetchProduct` menggunakan request HTTP `GET`.
-Menggunakan `FutureBuilder` untuk menampilkan data ke UI.
+1. Menambahkan dependensi `http` untuk pengambilan data.
+2. Menambahkan izin internet di file `AndroidManifest.xml.`
+3. Membuat fungsi `fetchProduct` menggunakan request HTTP `GET`.
+4. Menggunakan `FutureBuilder` untuk menampilkan data ke UI.
 
-3. Membuat Sistem Login, Register, dan Logout
+<h5> 3. Membuat Sistem Login, Register, dan Logout</h5> 
 - Tujuan: Mengintegrasikan autentikasi pengguna antara Django dan Flutter.
 - Langkah:
 Membuat endpoint login, register, dan logout di Django.
 Menggunakan `pbp_django_auth` dan `Provider` untuk autentikasi di Flutter.
 Implementasi:
-- - Login: Mengirim username dan password ke endpoint Django, lalu menyimpan sesi jika berhasil.
-- - Register: Mengirim data akun baru ke Django untuk dibuatkan pengguna baru.
-- - Logout: Menghapus sesi pengguna dengan memanggil endpoint Django.
+  1.  Login: Mengirim username dan password ke endpoint Django, lalu menyimpan sesi jika berhasil.
+  2. Register: Mengirim data akun baru ke Django untuk dibuatkan pengguna baru.
+  3.  Logout: Menghapus sesi pengguna dengan memanggil endpoint Django.
 
-4. Menampilkan Data ke UI
+<h5> 4. Menampilkan Data ke UI</h5> 
 - Tujuan: Menampilkan daftar produk yang diambil dari Django ke dalam aplikasi Flutter.
 - Langkah:
-  - 1. Membuat `ListView` untuk menampilkan daftar produk.
-  - 2. Menambahkan dekorasi UI menggunakan widget seperti `Card`, `Column`, dan `Text`.
+  1. Membuat `ListView` untuk menampilkan daftar produk.
+  2. Menambahkan dekorasi UI menggunakan widget seperti `Card`, `Column`, dan `Text`.
 
-5. Menambahkan Detail Produk
+<h5> 5. Menambahkan Detail Produk</h5> 
 -  Tujuan: Memberikan informasi lebih detail tentang suatu produk dan memungkinkan pengguna untuk kembali ke daftar produk.
 - Langkah:
-- 1. Membuat halaman `ProductDetailPage` yang menampilkan informasi detail produk.
-- 2. Menambahkan navigasi ke halaman detail saat pengguna menekan salah satu produk di daftar.
-- 3. Menambahkan tombol "Back" di halaman detail untuk kembali ke daftar produk.
+  1. Membuat halaman `ProductDetailPage` yang menampilkan informasi detail produk.
+  2. Menambahkan navigasi ke halaman detail saat pengguna menekan salah satu produk di daftar.
+  3. Menambahkan tombol "Back" di halaman detail untuk kembali ke daftar produk.
 
-6. Menggunakan State Management dengan Provider
+<h5> 6. Menggunakan State Management dengan Provider</h5> 
 - Tujuan: Mengelola state aplikasi dengan efisien.
 - Langkah:
-- 1.Membungkus root widget aplikasi dengan Provider.
-- 2.Membuat instance CookieRequest agar sesi dapat dibagikan ke seluruh komponen aplikasi.
-- 3.Menggunakan Provider untuk memantau status login dan logout pengguna.
+  1.Membungkus root widget aplikasi dengan Provider.
+  2.Membuat instance CookieRequest agar sesi dapat dibagikan ke seluruh komponen aplikasi.
+  3.Menggunakan Provider untuk memantau status login dan logout pengguna.
 Tambahan
 
-1. Terakhir setelah semua terintegrasi, saya menambahkan screens baru utuk menghandle detail product:
+<h5> Terakhir setelah semua terintegrasi, saya menambahkan screens baru utuk menghandle detail product:</h5> 
 
-2. Halaman Detail Produk: Dapat diakses dengan menekan salah satu produk di daftar.
+- Halaman Detail Produk: Dapat diakses dengan menekan salah satu produk di daftar.
 Tombol Back: Untuk kembali dari halaman detail ke daftar produk.
+
+- Tombol Back: Untuk kembali dari halaman detail ke daftar produk.
