@@ -519,6 +519,75 @@ Setelah login berhasil, Flutter menyimpan session (cookie) dan menggunakan sessi
 2. Menambahkan `fromJson` dan `toJson` untuk konversi data antara JSON dan objek.
 3. Jika respons berupa daftar data, menambahkan fungsi untuk menangani list JSON.
 
+```
+import 'dart:convert';
+
+// Function to deserialize JSON into a list of ProductEntry
+List<ProductEntry> productEntryFromJson(String str) =>
+    List<ProductEntry>.from(json.decode(str).map((x) => ProductEntry.fromJson(x)));
+
+// Function to serialize a list of ProductEntry into JSON
+String productEntryToJson(List<ProductEntry> data) =>
+    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+
+class ProductEntry {
+  String pk; // Primary key
+  Fields fields;
+
+  ProductEntry({
+    required this.pk,
+    required this.fields,
+  });
+
+  factory ProductEntry.fromJson(Map<String, dynamic> json) => ProductEntry(
+        pk: json["pk"],
+        fields: Fields.fromJson(json["fields"]),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "pk": pk,
+        "fields": fields.toJson(),
+      };
+}
+
+class Fields {
+  int user;
+  String name;
+  int price;
+  int stock;
+  String description;
+  String category;
+
+  Fields({
+    required this.user,
+    required this.name,
+    required this.price,
+    required this.stock,
+    required this.description,
+    required this.category,
+  });
+
+  factory Fields.fromJson(Map<String, dynamic> json) => Fields(
+        user: json["user"],
+        name: json["name"],
+        price: json["price"],
+        stock: json["stock"],
+        description: json["description"],
+        category: json["category"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "user": user,
+        "name": name,
+        "price": price,
+        "stock": stock,
+        "description": description,
+        "category": category,
+      };
+}
+
+```
+
 <h5> 2. Melakukan Fetch Data dari Web Service</h5> 
 
 - Tujuan: Mengambil data eksternal (dari Django) untuk ditampilkan di aplikasi Flutter.
@@ -527,6 +596,23 @@ Setelah login berhasil, Flutter menyimpan session (cookie) dan menggunakan sessi
 2. Menambahkan izin internet di file `AndroidManifest.xml.`
 3. Membuat fungsi `fetchProduct` menggunakan request HTTP `GET`.
 4. Menggunakan `FutureBuilder` untuk menampilkan data ke UI.
+
+```
+Future<List<ProductEntry>> fetchProduct(CookieRequest request) async {
+  final response = await request.get('http://localhost:8000/json/');
+  var data = response;
+
+  // Convert JSON response to a list of ProductEntry objects
+  List<ProductEntry> listProduct = [];
+  for (var d in data) {
+    if (d != null) {
+      listProduct.add(ProductEntry.fromJson(d));
+    }
+  }
+  return listProduct;
+}
+
+```
 
 <h5> 3. Membuat Sistem Login, Register, dan Logout</h5> 
 
@@ -539,12 +625,80 @@ Implementasi:
   2. Register: Mengirim data akun baru ke Django untuk dibuatkan pengguna baru.
   3.  Logout: Menghapus sesi pengguna dengan memanggil endpoint Django.
 
+```
+final response = await request.login("http://localhost:8000/auth/login/", {
+  'username': username,
+  'password': password,
+});
+
+if (request.loggedIn) {
+  Navigator.pushReplacement(
+    context,
+    MaterialPageRoute(builder: (context) => MyHomePage()),
+  );
+} else {
+  // Show error
+}
+
+```
+
+```
+final response = await request.logout("http://localhost:8000/auth/logout/");
+
+if (response['status']) {
+  Navigator.pushReplacement(
+    context,
+    MaterialPageRoute(builder: (context) => const LoginPage()),
+  );
+}
+
+```
+
 <h5> 4. Menampilkan Data ke UI</h5> 
 
 - Tujuan: Menampilkan daftar produk yang diambil dari Django ke dalam aplikasi Flutter.
 - Langkah:
   1. Membuat `ListView` untuk menampilkan daftar produk.
   2. Menambahkan dekorasi UI menggunakan widget seperti `Card`, `Column`, dan `Text`.
+
+```
+FutureBuilder<List<ProductEntry>>(
+  future: fetchProduct(request),
+  builder: (context, snapshot) {
+    if (snapshot.connectionState == ConnectionState.waiting) {
+      return const Center(child: CircularProgressIndicator());
+    } else if (snapshot.hasError) {
+      return Center(child: Text('Error: ${snapshot.error}'));
+    } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+      return const Center(
+        child: Text('No products available in SuiseiShop.'),
+      );
+    }
+
+    final products = snapshot.data!;
+    return ListView.builder(
+      itemCount: products.length,
+      itemBuilder: (_, index) {
+        final product = products[index];
+        final fields = product.fields;
+        return ListTile(
+          title: Text(fields.name),
+          subtitle: Text("Price: \$${fields.price}"),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ProductDetailPage(product: product),
+              ),
+            );
+          },
+        );
+      },
+    );
+  },
+);
+
+```
 
 <h5> 5. Menambahkan Detail Produk</h5> 
 
@@ -554,6 +708,48 @@ Implementasi:
   2. Menambahkan navigasi ke halaman detail saat pengguna menekan salah satu produk di daftar.
   3. Menambahkan tombol "Back" di halaman detail untuk kembali ke daftar produk.
 
+```
+class ProductDetailPage extends StatelessWidget {
+  final ProductEntry product;
+
+  const ProductDetailPage({super.key, required this.product});
+
+  @override
+  Widget build(BuildContext context) {
+    final fields = product.fields;
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(fields.name),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              fields.name,
+              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 16),
+            Text("Price: \$${fields.price}"),
+            Text("Stock: ${fields.stock}"),
+            Text("Description: ${fields.description}"),
+            Text("Category: ${fields.category}"),
+          ],
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.pop(context);
+        },
+        child: const Icon(Icons.arrow_back),
+      ),
+    );
+  }
+}
+
+```
+
 <h5> 6. Menggunakan State Management dengan Provider</h5> 
 
 - Tujuan: Mengelola state aplikasi dengan efisien.
@@ -562,6 +758,18 @@ Implementasi:
   2. Membuat instance CookieRequest agar sesi dapat dibagikan ke seluruh komponen aplikasi.
   3. Menggunakan Provider untuk memantau status login dan logout pengguna.
 Tambahan
+
+```
+void main() {
+  runApp(
+    Provider(
+      create: (_) => CookieRequest(),
+      child: const MyApp(),
+    ),
+  );
+}
+
+```
 
 <h5> Terakhir setelah semua terintegrasi, saya menambahkan screens baru utuk menghandle detail product:</h5> 
 
