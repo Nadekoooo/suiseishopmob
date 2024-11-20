@@ -512,6 +512,7 @@ Setelah login berhasil, Flutter menyimpan session (cookie) dan menggunakan sessi
 <h4> 6. Cara implementasi Checklist stepbystep</h4>
 
 <h5> 1. Membuat Model untuk Data JSON </h5>
+
 - Tujuan: Agar data dari web service (JSON) dapat diolah dan ditampilkan dengan baik di aplikasi Flutter.
 - Langkah:
 1. Membuat model menggunakan class di Flutter.
@@ -519,6 +520,7 @@ Setelah login berhasil, Flutter menyimpan session (cookie) dan menggunakan sessi
 3. Jika respons berupa daftar data, menambahkan fungsi untuk menangani list JSON.
 
 <h5> 2. Melakukan Fetch Data dari Web Service</h5> 
+
 - Tujuan: Mengambil data eksternal (dari Django) untuk ditampilkan di aplikasi Flutter.
 - Langkah:
 1. Menambahkan dependensi `http` untuk pengambilan data.
@@ -527,6 +529,7 @@ Setelah login berhasil, Flutter menyimpan session (cookie) dan menggunakan sessi
 4. Menggunakan `FutureBuilder` untuk menampilkan data ke UI.
 
 <h5> 3. Membuat Sistem Login, Register, dan Logout</h5> 
+
 - Tujuan: Mengintegrasikan autentikasi pengguna antara Django dan Flutter.
 - Langkah:
 Membuat endpoint login, register, dan logout di Django.
@@ -537,12 +540,14 @@ Implementasi:
   3.  Logout: Menghapus sesi pengguna dengan memanggil endpoint Django.
 
 <h5> 4. Menampilkan Data ke UI</h5> 
+
 - Tujuan: Menampilkan daftar produk yang diambil dari Django ke dalam aplikasi Flutter.
 - Langkah:
   1. Membuat `ListView` untuk menampilkan daftar produk.
   2. Menambahkan dekorasi UI menggunakan widget seperti `Card`, `Column`, dan `Text`.
 
 <h5> 5. Menambahkan Detail Produk</h5> 
+
 -  Tujuan: Memberikan informasi lebih detail tentang suatu produk dan memungkinkan pengguna untuk kembali ke daftar produk.
 - Langkah:
   1. Membuat halaman `ProductDetailPage` yang menampilkan informasi detail produk.
@@ -550,11 +555,12 @@ Implementasi:
   3. Menambahkan tombol "Back" di halaman detail untuk kembali ke daftar produk.
 
 <h5> 6. Menggunakan State Management dengan Provider</h5> 
+
 - Tujuan: Mengelola state aplikasi dengan efisien.
 - Langkah:
-  1.Membungkus root widget aplikasi dengan Provider.
-  2.Membuat instance CookieRequest agar sesi dapat dibagikan ke seluruh komponen aplikasi.
-  3.Menggunakan Provider untuk memantau status login dan logout pengguna.
+  1. Membungkus root widget aplikasi dengan Provider.
+  2. Membuat instance CookieRequest agar sesi dapat dibagikan ke seluruh komponen aplikasi.
+  3. Menggunakan Provider untuk memantau status login dan logout pengguna.
 Tambahan
 
 <h5> Terakhir setelah semua terintegrasi, saya menambahkan screens baru utuk menghandle detail product:</h5> 
